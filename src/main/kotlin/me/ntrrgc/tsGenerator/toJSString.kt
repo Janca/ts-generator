@@ -16,11 +16,16 @@
 
 package me.ntrrgc.tsGenerator
 
-internal fun String.toJSString(): String {
-    return "\"${this
-        .replace("\\", "\\\\")
-        .replace("\n", "\\n")
-        .replace("\t", "\\t")
-        .replace("\"", "\\\"")
-    }\""
+internal fun String.toJSString(quoteType: QuoteType = QuoteType.DOUBLE): String {
+    val quotes = when (quoteType) {
+        QuoteType.DOUBLE -> "\""
+        QuoteType.SINGLE -> "'"
+    }
+
+    return "$quotes${this
+            .replace("\\", "\\\\")
+            .replace("\n", "\\n")
+            .replace("\t", "\\t")
+            .replace("\"", "\\\"")
+    }$quotes"
 }
